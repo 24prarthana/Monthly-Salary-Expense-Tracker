@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Monthly Expense Tracker</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Monthly Salary Tracker</h1>
+
+<h3>Enter Monthly Salary</h3>
+<input type="number" id="salaryInput" placeholder="Enter your salary">
+<button onclick="setSalary()">Set Salary</button>
+
+<div class="dashboard">
+
+<div class="box">
+<h4>Salary</h4>
+<p id="salary">₹0</p>
+</div>
+
+<div class="box">
+<h4>Total Spent</h4>
+<p id="spent">₹0</p>
+</div>
+
+<div class="box">
+<h4>Remaining</h4>
+<p id="remaining">₹0</p>
+</div>
+
+</div>
+
+<h3>Add Daily Expense</h3>
+
+<input type="text" id="expenseText" placeholder="Expense description">
+
+<select id="category">
+<option>Food</option>
+<option>Travel</option>
+<option>Shopping</option>
+<option>Bills</option>
+<option>Other</option>
+</select>
+
+<input type="date" id="date">
+
+<input type="number" id="amount" placeholder="Amount">
+
+<button onclick="addExpense()">Add Expense</button>
+
+<h3>Expense History</h3>
+
+<ul id="list"></ul>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
