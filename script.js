@@ -1,9 +1,13 @@
-let salary = 0
-let spent = 0
+let salary = localStorage.getItem("salary") ? Number(localStorage.getItem("salary")) : 0
+let expenses = JSON.parse(localStorage.getItem("expenses")) || []
+
+document.getElementById("salary").innerText = "₹" + salary
 
 function setSalary(){
 
 salary = Number(document.getElementById("salaryInput").value)
+
+localStorage.setItem("salary", salary)
 
 document.getElementById("salary").innerText = "₹" + salary
 
@@ -23,16 +27,59 @@ alert("Enter complete details")
 return
 }
 
-spent += amount
+let expense = {
+text:text,
+category:category,
+date:date,
+amount:amount
+}
+
+expenses.push(expense)
+
+localStorage.setItem("expenses", JSON.stringify(expenses))
+
+displayExpenses()
+
+clearInputs()
+
+}
+
+function displayExpenses(){
+
+let list = document.getElementById("list")
+list.innerHTML = ""
+
+let spent = 0
+
+expenses.forEach((expense,index)=>{
+
+spent += expense.amount
 
 let li = document.createElement("li")
 
-li.innerHTML = `${date} | ${text} (${category}) ₹${amount}
-<button class="delete" onclick="deleteExpense(this,${amount})">X</button>`
+li.innerHTML = `${expense.date} | ${expense.text} (${expense.category}) ₹${expense.amount}
+<button class="delete" onclick="deleteExpense(${index})">X</button>`
 
-document.getElementById("list").appendChild(li)
+list.appendChild(li)
 
-updateBalance()
+})
+
+document.getElementById("spent").innerText = "₹" + spent
+document.getElementById("remaining").innerText = "₹" + (salary - spent)
+
+}
+
+function deleteExpense(index){
+
+expenses.splice(index,1)
+
+localStorage.setItem("expenses", JSON.stringify(expenses))
+
+displayExpenses()
+
+}
+
+function clearInputs(){
 
 document.getElementById("expenseText").value=""
 document.getElementById("amount").value=""
@@ -40,19 +87,4 @@ document.getElementById("date").value=""
 
 }
 
-function deleteExpense(btn,amount){
-
-btn.parentElement.remove()
-
-spent -= amount
-
-updateBalance()
-
-}
-
-function updateBalance(){
-
-document.getElementById("spent").innerText = "₹" + spent
-document.getElementById("remaining").innerText = "₹" + (salary - spent)
-
-}
+displayExpenses()
